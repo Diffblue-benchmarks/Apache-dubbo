@@ -1,0 +1,487 @@
+buildCmd: mvn -e -X -Dmaven.enforcer.skip=true -Denforcer.skip=true -Dair.check.skip-all=true -Dmaven.test.skip=true compile
+testCmd: true
+skipVerification: true
+cbmcArguments:
+  # Do not generate coverage comments on generated tests.
+  java-generate-no-comments: true
+  # Constrain the size of arrays created in the analyzed code.
+  java-max-vla-length: 100000
+phases:
+  -
+    # Phase 0 PRETTY, SIMPLE and SMART - pretty tests, do not test private methods directly, Smart-Harness
+    timeout: 180
+    cbmcArguments:
+      # Use simple models first containers (ArrayList, HashMap, HashSet,...) will have a maximum size of one.
+      classpath: '/tools/cbmc/models-simple-overlay.jar:/tools/cbmc/models.jar:.'
+      # Set a limit on the number of instructions that can be generated as part of a test trace.
+      depth: 1500
+      # Maximum allowed length for an array passed as test input.
+      max-nondet-array-length: 10
+      # Bound the length of input strings.
+      max-nondet-string-length: 10
+      # Add constraint that strings are printable
+      string-printable: true
+      # Make implicit runtime exceptions explicit.
+      throw-runtime-exceptions: false
+      # Set an upper bound on loop unwinding.
+      unwind: 1
+      # Do not test any methods that have the specified access level.
+      do-not-test-methods-with-access: [private]
+      # Instrument the entry point function only.
+      cover-function-only: false
+      # Instrument the file as opposed to the function only
+      cover-only: file
+      # Set string input value
+      string-input-value: ["foo", "Bar", "BAZ", "1234", "1a 2b 3c", "A1B2C3", "a,b,c", "1", "2", "3", "a/b/c", "a'b'c", ",", "/", "'"]
+      # Instantiate classes using the simplest constructor strategy
+      smart-harness: simplest-constructor-and-nondet
+  -
+    # Phase 1 PRETTY AND COMPLEX - standard models only, pretty tests, do not test private methods directly, input factory
+    timeout: 180
+    cbmcArguments:
+      # Use the standard models library
+      classpath: '/tools/cbmc/models.jar:.'
+      # Set a limit on the number of instructions that can be generated as part of a test trace.
+      depth: false
+      # never initialize reference-typed parameter to the entry point with null
+      java-assume-inputs-non-null: true
+      # Maximum allowed length for an array passed as test input.
+      max-nondet-array-length: 10
+      # Bound the length of input strings.
+      max-nondet-string-length: 10
+      # Add constraint that strings are printable
+      string-printable: true
+      # Set string input value
+      string-input-value: ["foo", "Bar", "BAZ", "1234", "1a 2b 3c", "A1B2C3", "a,b,c", "1", "2", "3", "a/b/c", "a'b'c", ",", "/", "'"]
+      # Make implicit runtime exceptions explicit.
+      throw-runtime-exceptions: false
+      # Set an upper bound on loop unwinding.
+      unwind: 2
+      # Do not test any methods that have the specified access level.
+      do-not-test-methods-with-access: [private]
+      # Instrument the entry point function only.
+      cover-function-only: false
+      # instrument the file as opposed to the function only
+      cover-only: file
+      # Limit input factory recursive depth (default 0 = no recursion allowed)
+      java-test-input-factory-bmc-recursion-limit: 4
+  -
+    # Phase 2 FIFO Strategy - pretty tests, do not test private methods directly, fifo
+    timeout: 100
+    cbmcArguments:
+      # Use the standard models library
+      classpath: '/tools/cbmc/models.jar:.'
+      # Set a limit on the number of instructions that can be generated as part of a test trace.
+      depth: false
+      # never initialize reference-typed parameter to the entry point with null
+      java-assume-inputs-non-null: true
+      # Maximum allowed length for an array passed as test input.
+      max-nondet-array-length: 30
+      # Add constraint that strings are printable
+      max-nondet-string-length: 100
+      # Explores the program tree breadth-first.
+      paths: fifo
+      # Set string input value
+      string-input-value: ["foo", "Bar", "BAZ", "1234", "1a 2b 3c", "A1B2C3", "a,b,c", "1", "2", "3", "a/b/c", "a'b'c", ",", "/", "'"]
+      # Add constraint that strings are printable
+      string-printable: true
+      # Make implicit runtime exceptions explicit.
+      throw-runtime-exceptions: false
+      # Set an upper bound on loop unwinding.
+      unwind: false
+      # Do not test any methods that have the specified access level.
+      do-not-test-methods-with-access: [private]
+      # Instrument the entry point function only.
+      cover-function-only: false
+      # instrument the file as opposed to the function only
+      cover-only: file
+  -
+    # Phase 3 Exceptions - do not test private methods directly
+    timeout: 180
+    cbmcArguments:
+      # Use simple models containers first (ArrayList, HashMap, HashSet,...) will have a maximum size of one.
+      classpath: '/tools/cbmc/models-simple-overlay.jar:/tools/cbmc/models.jar:.'
+      # Set a limit on the number of instructions that can be generated as part of a test trace.
+      depth: false
+      # Maximum allowed length for an array passed as test input.
+      max-nondet-array-length: 30
+      # Bound the length of input strings.
+      max-nondet-string-length: 30
+      # Add constraint that strings are printable
+      string-printable: false
+      # Make implicit runtime exceptions explicit.
+      throw-runtime-exceptions: true
+      # Set an upper bound on loop unwinding.
+      unwind: 3
+      # Do not test any methods that have the specified access level.
+      do-not-test-methods-with-access: [private]
+      # Instrument the entry point function only.
+      cover-function-only: false
+      # instrument the file as opposed to the function only
+      cover-only: file
+  -
+    # Phase 4 Direct testing - test private methods directly, increased reflection
+    timeout: 180
+    cbmcArguments:
+      # Use simple models containers first (ArrayList, HashMap, HashSet,...) will have a maximum size of one.
+      classpath: '/tools/cbmc/models-simple-overlay.jar:/tools/cbmc/models.jar:.'
+      # Set a limit on the number of instructions that can be generated as part of a test trace.
+      depth: 1500
+      # never initialize reference-typed parameter to the entry point with null
+      java-assume-inputs-non-null: true
+      # Maximum allowed length for an array passed as test input.
+      max-nondet-array-length: 10
+      # Bound the length of input strings.
+      max-nondet-string-length: 10
+      # Add constraint that strings are printable
+      string-printable: true
+      # Make implicit runtime exceptions explicit.
+      throw-runtime-exceptions: false
+      # Set an upper bound on loop unwinding.
+      unwind: 1
+      # Set string input value
+      string-input-value: ["foo", "Bar", "BAZ", "1234", "1a 2b 3c", "A1B2C3", "a,b,c", "1", "2", "3", "a/b/c", "a'b'c", ",", "/", "'"]
+      # If the logs contain output of the following then proceed to phase X
+    nextPhase:
+      # If the function is not analysable then do not pass onto the next phase
+      not_analyzed: null
+  -
+    # PHASE 5 Mocking - aggressive mocking, do not test private methods directly
+    timeout: 180
+    cbmcArguments:
+      # Use simple models containers first (ArrayList, HashMap, HashSet,...) will have a maximum size of one.
+      classpath: '/tools/cbmc/models-simple-overlay.jar:/tools/cbmc/models.jar:.'
+      # Set a limit on the number of instructions that can be generated as part of a test trace.
+      depth: 3000
+      # never initialize reference-typed parameter to the entry point with null
+      java-assume-inputs-non-null: true
+      # Only load the class (and related inner/outer classes) containing the method under test,
+      load-containing-class-only: true
+      # Maximum allowed length for an array passed as test input.
+      max-nondet-array-length: 30
+      # Bound the length of input strings.
+      max-nondet-string-length: 100
+      # Add constraint that strings are printable
+      string-printable: false
+      # Make implicit runtime exceptions explicit.
+      throw-runtime-exceptions: true
+      # Set an upper bound on loop unwinding.
+      unwind: 3
+      # Do not test any methods that have the specified access level.
+      do-not-test-methods-with-access: [private]
+      # Instrument the entry point function only.
+      cover-function-only: false
+      # instrument the file as opposed to the function only
+      cover-only: file
+units:
+ - target:
+   - dir: dubbo-rpc/dubbo-rpc-api/target/classes
+     file: org/apache/dubbo/rpc/support/ProtocolUtils.class
+     sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
+     sourceFile: org/apache/dubbo/rpc/support/ProtocolUtils.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/URL.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/URL.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/utils/StringUtils.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/utils/StringUtils.java
+ - target:
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/json/JSONToken.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/json/JSONToken.java
+ - target:
+   - dir: dubbo-rpc/dubbo-rpc-api/target/classes
+     file: org/apache/dubbo/rpc/support/MockInvoker.class
+     sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
+     sourceFile: org/apache/dubbo/rpc/support/MockInvoker.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/logger/Logger.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/logger/Logger.java
+   - dir: dubbo-rpc/dubbo-rpc-api/target/classes
+     file: org/apache/dubbo/rpc/AbstractResult.class
+     sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
+     sourceFile: org/apache/dubbo/rpc/AbstractResult.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/utils/ConfigUtils.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/utils/ConfigUtils.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/URL.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/URL.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/extension/ExtensionFactory.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/extension/ExtensionFactory.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/compiler/Compiler.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/compiler/Compiler.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/utils/StringUtils.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/utils/StringUtils.java
+   - dir: dubbo-rpc/dubbo-rpc-api/target/classes
+     file: org/apache/dubbo/rpc/Invoker.class
+     sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
+     sourceFile: org/apache/dubbo/rpc/Invoker.java
+   - dir: dubbo-rpc/dubbo-rpc-api/target/classes
+     file: org/apache/dubbo/rpc/AsyncRpcResult.class
+     sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
+     sourceFile: org/apache/dubbo/rpc/AsyncRpcResult.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/utils/ArrayUtils.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/utils/ArrayUtils.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/extension/SPI.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/extension/SPI.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/utils/CompatibleTypeUtils.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/utils/CompatibleTypeUtils.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/extension/Adaptive.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/extension/Adaptive.java
+   - dir: dubbo-rpc/dubbo-rpc-api/target/classes
+     file: org/apache/dubbo/rpc/RpcException.class
+     sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
+     sourceFile: org/apache/dubbo/rpc/RpcException.java
+   - dir: dubbo-rpc/dubbo-rpc-api/target/classes
+     file: org/apache/dubbo/rpc/RpcInvocation.class
+     sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
+     sourceFile: org/apache/dubbo/rpc/RpcInvocation.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/utils/ClassUtils.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/utils/ClassUtils.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/extension/AdaptiveClassCodeGenerator.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/extension/AdaptiveClassCodeGenerator.java
+   - dir: dubbo-rpc/dubbo-rpc-api/target/classes
+     file: org/apache/dubbo/rpc/Invocation.class
+     sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
+     sourceFile: org/apache/dubbo/rpc/Invocation.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/utils/ReflectUtils.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/utils/ReflectUtils.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/utils/PojoUtils$PojoInvocationHandler.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/utils/PojoUtils.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/utils/ConcurrentHashSet.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/utils/ConcurrentHashSet.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/utils/Holder.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/utils/Holder.java
+   - dir: dubbo-rpc/dubbo-rpc-api/target/classes
+     file: org/apache/dubbo/rpc/support/RpcUtils.class
+     sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
+     sourceFile: org/apache/dubbo/rpc/support/RpcUtils.java
+   - dir: dubbo-rpc/dubbo-rpc-api/target/classes
+     file: org/apache/dubbo/rpc/Result.class
+     sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
+     sourceFile: org/apache/dubbo/rpc/Result.java
+   - dir: dubbo-rpc/dubbo-rpc-api/target/classes
+     file: org/apache/dubbo/rpc/ProxyFactory.class
+     sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
+     sourceFile: org/apache/dubbo/rpc/ProxyFactory.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/threadlocal/InternalThreadLocalMap.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/threadlocal/InternalThreadLocalMap.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/utils/PojoUtils.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/utils/PojoUtils.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/threadlocal/InternalThread.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/threadlocal/InternalThread.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/threadlocal/InternalThreadLocal.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/threadlocal/InternalThreadLocal.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/Extension.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/Extension.java
+   - dir: dubbo-rpc/dubbo-rpc-api/target/classes
+     file: org/apache/dubbo/rpc/AppResponse.class
+     sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
+     sourceFile: org/apache/dubbo/rpc/AppResponse.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/extension/ExtensionLoader.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/extension/ExtensionLoader.java
+   - dir: dubbo-rpc/dubbo-rpc-api/target/classes
+     file: org/apache/dubbo/rpc/RpcContext.class
+     sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
+     sourceFile: org/apache/dubbo/rpc/RpcContext.java
+ - target:
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/utils/ClassUtils.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/utils/ClassUtils.java
+ - target:
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/io/Bytes.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/io/Bytes.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/io/UnsafeByteArrayOutputStream.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/io/UnsafeByteArrayOutputStream.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/io/UnsafeByteArrayInputStream.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/io/UnsafeByteArrayInputStream.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/utils/IOUtils.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/utils/IOUtils.java
+ - target:
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/compiler/support/ClassUtils.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/compiler/support/ClassUtils.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/utils/StringUtils.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/utils/StringUtils.java
+ - target:
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/utils/UrlUtils.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/utils/UrlUtils.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/utils/ArrayUtils.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/utils/ArrayUtils.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/utils/StringUtils.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/utils/StringUtils.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/utils/CollectionUtils.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/utils/CollectionUtils.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/URL.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/URL.java
+ - target:
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/utils/StringUtils.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/utils/StringUtils.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/utils/ArrayUtils.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/utils/ArrayUtils.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/logger/Logger.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/logger/Logger.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/utils/CollectionUtils.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/utils/CollectionUtils.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/utils/ReflectUtils.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/utils/ReflectUtils.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/io/UnsafeStringWriter.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/io/UnsafeStringWriter.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/logger/LoggerFactory.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/logger/LoggerFactory.java
+ - target:
+   - dir: dubbo-plugin/dubbo-qos/target/classes
+     file: org/apache/dubbo/qos/textui/TTable.class
+     sourceDir: dubbo-plugin/dubbo-qos/src/main/java
+     sourceFile: org/apache/dubbo/qos/textui/TTable.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/utils/ArrayUtils.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/utils/ArrayUtils.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/utils/StringUtils.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/utils/StringUtils.java
+   - dir: dubbo-plugin/dubbo-qos/target/classes
+     file: org/apache/dubbo/qos/textui/TTable$Border.class
+     sourceDir: dubbo-plugin/dubbo-qos/src/main/java
+     sourceFile: org/apache/dubbo/qos/textui/TTable.java
+   - dir: dubbo-plugin/dubbo-qos/target/classes
+     file: org/apache/dubbo/qos/textui/TTable$ColumnDefine.class
+     sourceDir: dubbo-plugin/dubbo-qos/src/main/java
+     sourceFile: org/apache/dubbo/qos/textui/TTable.java
+ - target:
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/URL.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/URL.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/utils/ArrayUtils.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/utils/ArrayUtils.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/utils/StringUtils.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/utils/StringUtils.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/config/Configuration.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/config/Configuration.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/config/AbstractPrefixConfiguration.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/config/AbstractPrefixConfiguration.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/utils/CollectionUtils.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/utils/CollectionUtils.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/utils/NetUtils.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/utils/NetUtils.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/config/InmemoryConfiguration.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/config/InmemoryConfiguration.java
+ - target:
+   - dir: dubbo-remoting/dubbo-remoting-netty4/target/classes
+     file: org/apache/dubbo/remoting/transport/netty4/logging/MessageFormatter.class
+     sourceDir: dubbo-remoting/dubbo-remoting-netty4/src/main/java
+     sourceFile: org/apache/dubbo/remoting/transport/netty4/logging/MessageFormatter.java
+   - dir: dubbo-remoting/dubbo-remoting-netty4/target/classes
+     file: org/apache/dubbo/remoting/transport/netty4/logging/FormattingTuple.class
+     sourceDir: dubbo-remoting/dubbo-remoting-netty4/src/main/java
+     sourceFile: org/apache/dubbo/remoting/transport/netty4/logging/FormattingTuple.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/logger/Logger.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/logger/Logger.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/utils/ArrayUtils.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/utils/ArrayUtils.java
+   - dir: dubbo-common/target/classes
+     file: org/apache/dubbo/common/logger/LoggerFactory.class
+     sourceDir: dubbo-common/src/main/java
+     sourceFile: org/apache/dubbo/common/logger/LoggerFactory.java
