@@ -174,314 +174,105 @@ phases:
       # instrument the file as opposed to the function only
       cover-only: file
 units:
- - target:
-   - dir: dubbo-rpc/dubbo-rpc-api/target/classes
-     file: org/apache/dubbo/rpc/support/ProtocolUtils.class
-     sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
-     sourceFile: org/apache/dubbo/rpc/support/ProtocolUtils.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/URL.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/URL.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/utils/StringUtils.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/utils/StringUtils.java
- - target:
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/json/JSONToken.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/json/JSONToken.java
- - target:
-   - dir: dubbo-rpc/dubbo-rpc-api/target/classes
-     file: org/apache/dubbo/rpc/support/MockInvoker.class
-     sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
-     sourceFile: org/apache/dubbo/rpc/support/MockInvoker.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/logger/Logger.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/logger/Logger.java
-   - dir: dubbo-rpc/dubbo-rpc-api/target/classes
-     file: org/apache/dubbo/rpc/AbstractResult.class
-     sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
-     sourceFile: org/apache/dubbo/rpc/AbstractResult.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/utils/ConfigUtils.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/utils/ConfigUtils.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/URL.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/URL.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/extension/ExtensionFactory.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/extension/ExtensionFactory.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/compiler/Compiler.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/compiler/Compiler.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/utils/StringUtils.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/utils/StringUtils.java
-   - dir: dubbo-rpc/dubbo-rpc-api/target/classes
-     file: org/apache/dubbo/rpc/Invoker.class
-     sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
-     sourceFile: org/apache/dubbo/rpc/Invoker.java
-   - dir: dubbo-rpc/dubbo-rpc-api/target/classes
-     file: org/apache/dubbo/rpc/AsyncRpcResult.class
-     sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
-     sourceFile: org/apache/dubbo/rpc/AsyncRpcResult.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/utils/ArrayUtils.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/utils/ArrayUtils.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/extension/SPI.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/extension/SPI.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/utils/CompatibleTypeUtils.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/utils/CompatibleTypeUtils.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/extension/Adaptive.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/extension/Adaptive.java
-   - dir: dubbo-rpc/dubbo-rpc-api/target/classes
-     file: org/apache/dubbo/rpc/RpcException.class
-     sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
-     sourceFile: org/apache/dubbo/rpc/RpcException.java
-   - dir: dubbo-rpc/dubbo-rpc-api/target/classes
-     file: org/apache/dubbo/rpc/RpcInvocation.class
-     sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
-     sourceFile: org/apache/dubbo/rpc/RpcInvocation.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/utils/ClassUtils.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/utils/ClassUtils.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/extension/AdaptiveClassCodeGenerator.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/extension/AdaptiveClassCodeGenerator.java
-   - dir: dubbo-rpc/dubbo-rpc-api/target/classes
-     file: org/apache/dubbo/rpc/Invocation.class
-     sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
-     sourceFile: org/apache/dubbo/rpc/Invocation.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/utils/ReflectUtils.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/utils/ReflectUtils.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/utils/PojoUtils$PojoInvocationHandler.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/utils/PojoUtils.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/utils/ConcurrentHashSet.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/utils/ConcurrentHashSet.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/utils/Holder.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/utils/Holder.java
-   - dir: dubbo-rpc/dubbo-rpc-api/target/classes
-     file: org/apache/dubbo/rpc/support/RpcUtils.class
-     sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
-     sourceFile: org/apache/dubbo/rpc/support/RpcUtils.java
-   - dir: dubbo-rpc/dubbo-rpc-api/target/classes
-     file: org/apache/dubbo/rpc/Result.class
-     sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
-     sourceFile: org/apache/dubbo/rpc/Result.java
-   - dir: dubbo-rpc/dubbo-rpc-api/target/classes
-     file: org/apache/dubbo/rpc/ProxyFactory.class
-     sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
-     sourceFile: org/apache/dubbo/rpc/ProxyFactory.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/threadlocal/InternalThreadLocalMap.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/threadlocal/InternalThreadLocalMap.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/utils/PojoUtils.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/utils/PojoUtils.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/threadlocal/InternalThread.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/threadlocal/InternalThread.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/threadlocal/InternalThreadLocal.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/threadlocal/InternalThreadLocal.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/Extension.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/Extension.java
-   - dir: dubbo-rpc/dubbo-rpc-api/target/classes
-     file: org/apache/dubbo/rpc/AppResponse.class
-     sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
-     sourceFile: org/apache/dubbo/rpc/AppResponse.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/extension/ExtensionLoader.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/extension/ExtensionLoader.java
-   - dir: dubbo-rpc/dubbo-rpc-api/target/classes
-     file: org/apache/dubbo/rpc/RpcContext.class
-     sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
-     sourceFile: org/apache/dubbo/rpc/RpcContext.java
- - target:
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/utils/ClassUtils.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/utils/ClassUtils.java
- - target:
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/io/Bytes.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/io/Bytes.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/io/UnsafeByteArrayOutputStream.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/io/UnsafeByteArrayOutputStream.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/io/UnsafeByteArrayInputStream.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/io/UnsafeByteArrayInputStream.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/utils/IOUtils.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/utils/IOUtils.java
- - target:
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/compiler/support/ClassUtils.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/compiler/support/ClassUtils.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/utils/StringUtils.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/utils/StringUtils.java
- - target:
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/utils/UrlUtils.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/utils/UrlUtils.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/utils/ArrayUtils.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/utils/ArrayUtils.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/utils/StringUtils.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/utils/StringUtils.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/utils/CollectionUtils.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/utils/CollectionUtils.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/URL.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/URL.java
- - target:
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/utils/StringUtils.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/utils/StringUtils.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/utils/ArrayUtils.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/utils/ArrayUtils.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/logger/Logger.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/logger/Logger.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/utils/CollectionUtils.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/utils/CollectionUtils.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/utils/ReflectUtils.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/utils/ReflectUtils.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/io/UnsafeStringWriter.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/io/UnsafeStringWriter.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/logger/LoggerFactory.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/logger/LoggerFactory.java
- - target:
-   - dir: dubbo-plugin/dubbo-qos/target/classes
-     file: org/apache/dubbo/qos/textui/TTable.class
-     sourceDir: dubbo-plugin/dubbo-qos/src/main/java
-     sourceFile: org/apache/dubbo/qos/textui/TTable.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/utils/ArrayUtils.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/utils/ArrayUtils.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/utils/StringUtils.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/utils/StringUtils.java
-   - dir: dubbo-plugin/dubbo-qos/target/classes
-     file: org/apache/dubbo/qos/textui/TTable$Border.class
-     sourceDir: dubbo-plugin/dubbo-qos/src/main/java
-     sourceFile: org/apache/dubbo/qos/textui/TTable.java
-   - dir: dubbo-plugin/dubbo-qos/target/classes
-     file: org/apache/dubbo/qos/textui/TTable$ColumnDefine.class
-     sourceDir: dubbo-plugin/dubbo-qos/src/main/java
-     sourceFile: org/apache/dubbo/qos/textui/TTable.java
- - target:
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/URL.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/URL.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/utils/ArrayUtils.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/utils/ArrayUtils.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/utils/StringUtils.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/utils/StringUtils.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/config/Configuration.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/config/Configuration.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/config/AbstractPrefixConfiguration.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/config/AbstractPrefixConfiguration.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/utils/CollectionUtils.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/utils/CollectionUtils.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/utils/NetUtils.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/utils/NetUtils.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/config/InmemoryConfiguration.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/config/InmemoryConfiguration.java
- - target:
-   - dir: dubbo-remoting/dubbo-remoting-netty4/target/classes
-     file: org/apache/dubbo/remoting/transport/netty4/logging/MessageFormatter.class
-     sourceDir: dubbo-remoting/dubbo-remoting-netty4/src/main/java
-     sourceFile: org/apache/dubbo/remoting/transport/netty4/logging/MessageFormatter.java
-   - dir: dubbo-remoting/dubbo-remoting-netty4/target/classes
-     file: org/apache/dubbo/remoting/transport/netty4/logging/FormattingTuple.class
-     sourceDir: dubbo-remoting/dubbo-remoting-netty4/src/main/java
-     sourceFile: org/apache/dubbo/remoting/transport/netty4/logging/FormattingTuple.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/logger/Logger.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/logger/Logger.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/utils/ArrayUtils.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/utils/ArrayUtils.java
-   - dir: dubbo-common/target/classes
-     file: org/apache/dubbo/common/logger/LoggerFactory.class
-     sourceDir: dubbo-common/src/main/java
-     sourceFile: org/apache/dubbo/common/logger/LoggerFactory.java
+  # Target Coverage: Unknown %
+  - target:
+    - dir: dubbo-rpc/dubbo-rpc-api/target/classes
+      file: org/apache/dubbo/rpc/support/MockInvoker.class
+      sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
+      sourceFile: org/apache/dubbo/rpc/support/MockInvoker.java
+    # Child of MockInvoker.class
+    # Child Coverage: Unknown %
+    - dir: dubbo-rpc/dubbo-rpc-api/target/classes
+      file: org/apache/dubbo/rpc/AsyncRpcResult.class
+      sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
+      sourceFile: org/apache/dubbo/rpc/AsyncRpcResult.java
+    # Child of MockInvoker.class
+    # Child Coverage: Unknown %
+    - dir: dubbo-rpc/dubbo-rpc-api/target/classes
+      file: org/apache/dubbo/rpc/Result.class
+      sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
+      sourceFile: org/apache/dubbo/rpc/Result.java
+    # Child of MockInvoker.class
+    # Child Coverage: Unknown %
+    - dir: dubbo-rpc/dubbo-rpc-api/target/classes
+      file: org/apache/dubbo/rpc/Constants.class
+      sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
+      sourceFile: org/apache/dubbo/rpc/Constants.java
+    # Child of MockInvoker.class
+    # Child Coverage: Unknown %
+    - dir: dubbo-rpc/dubbo-rpc-api/target/classes
+      file: org/apache/dubbo/rpc/ProxyFactory.class
+      sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
+      sourceFile: org/apache/dubbo/rpc/ProxyFactory.java
+    # Child of MockInvoker.class
+    # Child Coverage: Unknown %
+    - dir: dubbo-common/target/classes
+      file: org/apache/dubbo/common/utils/ConfigUtils.class
+      sourceDir: dubbo-common/src/main/java
+      sourceFile: org/apache/dubbo/common/utils/ConfigUtils.java
+    # Child of MockInvoker.class
+    # Child Coverage: Unknown %
+    - dir: dubbo-common/target/classes
+      file: org/apache/dubbo/common/utils/PojoUtils.class
+      sourceDir: dubbo-common/src/main/java
+      sourceFile: org/apache/dubbo/common/utils/PojoUtils.java
+    # Child of MockInvoker.class
+    # Child Coverage: Unknown %
+    - dir: dubbo-common/target/classes
+      file: org/apache/dubbo/common/URL.class
+      sourceDir: dubbo-common/src/main/java
+      sourceFile: org/apache/dubbo/common/URL.java
+    # Child of MockInvoker.class
+    # Child Coverage: Unknown %
+    - dir: dubbo-rpc/dubbo-rpc-api/target/classes
+      file: org/apache/dubbo/rpc/support/RpcUtils.class
+      sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
+      sourceFile: org/apache/dubbo/rpc/support/RpcUtils.java
+    # Child of MockInvoker.class
+    # Child Coverage: Unknown %
+    - dir: dubbo-common/target/classes
+      file: org/apache/dubbo/common/utils/StringUtils.class
+      sourceDir: dubbo-common/src/main/java
+      sourceFile: org/apache/dubbo/common/utils/StringUtils.java
+    # Child of MockInvoker.class
+    # Child Coverage: Unknown %
+    - dir: dubbo-common/target/classes
+      file: org/apache/dubbo/common/utils/ArrayUtils.class
+      sourceDir: dubbo-common/src/main/java
+      sourceFile: org/apache/dubbo/common/utils/ArrayUtils.java
+    # Child of MockInvoker.class
+    # Child Coverage: Unknown %
+    - dir: dubbo-rpc/dubbo-rpc-api/target/classes
+      file: org/apache/dubbo/rpc/RpcException.class
+      sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
+      sourceFile: org/apache/dubbo/rpc/RpcException.java
+    # Child of MockInvoker.class
+    # Child Coverage: Unknown %
+    - dir: dubbo-rpc/dubbo-rpc-api/target/classes
+      file: org/apache/dubbo/rpc/RpcInvocation.class
+      sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
+      sourceFile: org/apache/dubbo/rpc/RpcInvocation.java
+    # Child of MockInvoker.class
+    # Child Coverage: Unknown %
+    - dir: dubbo-rpc/dubbo-rpc-api/target/classes
+      file: org/apache/dubbo/rpc/Invoker.class
+      sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
+      sourceFile: org/apache/dubbo/rpc/Invoker.java
+    # Child of MockInvoker.class
+    # Child Coverage: Unknown %
+    - dir: dubbo-common/target/classes
+      file: org/apache/dubbo/common/extension/ExtensionLoader.class
+      sourceDir: dubbo-common/src/main/java
+      sourceFile: org/apache/dubbo/common/extension/ExtensionLoader.java
+    # Child of MockInvoker.class
+    # Child Coverage: Unknown %
+    - dir: dubbo-common/target/classes
+      file: org/apache/dubbo/common/utils/ReflectUtils.class
+      sourceDir: dubbo-common/src/main/java
+      sourceFile: org/apache/dubbo/common/utils/ReflectUtils.java
+    # Child of MockInvoker.class
+    # Child Coverage: Unknown %
+    - dir: dubbo-rpc/dubbo-rpc-api/target/classes
+      file: org/apache/dubbo/rpc/Invocation.class
+      sourceDir: dubbo-rpc/dubbo-rpc-api/src/main/java
+      sourceFile: org/apache/dubbo/rpc/Invocation.java
